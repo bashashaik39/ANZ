@@ -1,50 +1,58 @@
-package com.reciepe.ReciepeEx;
+package com.reciepe.demo2.Reciepedemo2.controller;
 
+import java.lang.invoke.MethodType;
 import java.util.List;
 import java.util.Optional;
 
-import javax.websocket.server.PathParam;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.reciepe.demo2.Reciepedemo2.Entity.ReciepeEntity;
+import com.reciepe.demo2.Reciepedemo2.Service.ReciepeService;
 @RestController
 public class ReciepeController {
-	
+
 	@Autowired
-	private ReciepeService rs;
+	private ReciepeService reciepeService;
 
 	@PostMapping
-	@RequestMapping(value = "/save")
-	public ResponseEntity<ReciepePojo> savedata(@RequestBody ReciepePojo reciepePojo) {
-		ResponseEntity<ReciepePojo> re = new ResponseEntity<>(HttpStatus.OK);
-		rs.savedata(reciepePojo);
-		return re;
-
-	}
-	 
-	@RequestMapping(value = "/get",method=RequestMethod.GET)
-	public ResponseEntity<List<ReciepePojo>> getatamethod() {
-		List<ReciepePojo> t=rs.getdata();
-		ResponseEntity<List<ReciepePojo>> re = new ResponseEntity<List<ReciepePojo>>(t,HttpStatus.OK);
+	@RequestMapping(value="/save")
+	public ResponseEntity<ReciepeEntity> savereciepe(@RequestBody ReciepeEntity reciepe) {
+		ResponseEntity<ReciepeEntity> re = new ResponseEntity<>(HttpStatus.OK);
+		reciepeService.saveReciepe(reciepe);
 		return re;
 
 	}
 	
-	@RequestMapping(value = "/search/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Optional<ReciepePojo>> searchmethod(@PathVariable Integer id) {
-		Optional<ReciepePojo> t=rs.Searchmethod(id);
-		ResponseEntity<Optional<ReciepePojo>> re = new ResponseEntity<Optional<ReciepePojo>>(t,HttpStatus.OK);
+	@GetMapping
+	@RequestMapping(value="/get")
+	public ResponseEntity<List<ReciepeEntity>> getreciepe(){
+	List<ReciepeEntity> list = reciepeService.getreciepe();
+	ResponseEntity<List<ReciepeEntity>> re = new ResponseEntity<List<ReciepeEntity>>(list,HttpStatus.OK);
 		return re;
-
+		
 	}
+	
+
+	@GetMapping
+	@RequestMapping(value="/getbyid/{id}")
+	public ResponseEntity<Optional<ReciepeEntity>> searchById(@PathVariable Integer id){
+		Optional<ReciepeEntity> list =reciepeService.searchById(id);
+		ResponseEntity<Optional<ReciepeEntity>> re = new ResponseEntity<>(list,HttpStatus.OK);
+			return re;
+		
+	}
+	
+	
+	
+	
+	
+
 }

@@ -1,40 +1,33 @@
-package com.reciepe.ReciepeEx;
+package com.reciepe.demo2.Reciepedemo2.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.reciepe.demo2.Reciepedemo2.Dao.ReciepeDao;
+import com.reciepe.demo2.Reciepedemo2.Entity.ReciepeEntity;
 @Service
 public class ReciepeService {
-	@Autowired
-	private ReciepeDao rd;
+	
+@Autowired
+private ReciepeDao reciepeDao;
+public void saveReciepe(ReciepeEntity re){
+reciepeDao.save(re);
+}
 
-	public void savedata(ReciepePojo reciepePojo) {
-			List<Ingredients>list=reciepePojo.getIngredients();
-			for (Ingredients ingredients : list) {
-					ingredients.setPojo(reciepePojo);
-			}
-		rd.save(reciepePojo);
-	}
 
-	public List< ReciepePojo> getdata() {
-		List<ReciepePojo> d= rd.findAll();
-		return d;
-		
-		
-	}
+public List<ReciepeEntity> getreciepe() {
+	List<ReciepeEntity> resp =reciepeDao.findAll();
+	return resp;
+}
 
-	public Optional<ReciepePojo> Searchmethod(Integer id) {
-		Optional<ReciepePojo> e=rd.findById(id);
-		return e;
-	}
 
+public Optional<ReciepeEntity> searchById(Integer id) {
+	Optional<ReciepeEntity> entity=reciepeDao.findById(id);
+	return entity;
+}
+
+  
 }
