@@ -71,7 +71,7 @@ public class Reciepedemo2ApplicationTest {
 				.andExpect(jsonPath("$[0].href", is("http://www.grouprecipes.com/43522/creamyscrambled-eggs-recipe.html")))
 				.andExpect(jsonPath("$[1].href", is("http://www.grouprecipes.com/43522/creamyscrambled-eggs-recipe.html")))
 				.andExpect(jsonPath("$[2].href", is("http://www.grouprecipes.com/43522/creamyscrambled-eggs-recipe.html")));
-		verify(service, times(0)).getreciepe();
+		verify(service, times(1)).getreciepe();
 		verifyNoMoreInteractions(service);
 	}
 
